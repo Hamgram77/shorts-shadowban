@@ -7,9 +7,12 @@
   const STORAGE_KEY = "shortsShadowbanHandles";
   const BUTTON_CLASS = "shorts-shadowban-button";
   const STYLE_ID = "shorts-shadowban-styles";
+  const RENDERER_SELECTOR = "ytd-reel-video-renderer, ytd-reel-video-renderer-cow";
   let blockedHandles = new Set();
   let lastSkippedHandle = "";
   let lastSkippedAt = 0;
+  let fallbackButton = null;
+  let fallbackRenderer = null;
 
   const storageArea = () => {
     if (globalThis.chrome?.storage?.local) return globalThis.chrome.storage.local;
@@ -61,7 +64,7 @@
   }
 
   function activeRenderer() {
-    const renderers = [...document.querySelectorAll("ytd-reel-video-renderer")];
+    const renderers = [...document.querySelectorAll(RENDERER_SELECTOR)];
     const explicitlyActive = renderers.find((renderer) =>
       (renderer.hasAttribute("is-active") || renderer.hasAttribute("active")) &&
       !renderer.hidden && renderer.getAttribute("aria-hidden") !== "true"
@@ -86,6 +89,12 @@
     if (!renderer) return null;
 
     const knownSelectors = [
+      "ytd-reel-player-overlay-renderer-cow reel-action-bar-view-model",
+      "ytd-reel-player-overlay-renderer-cow .ytReelPlayerOverlayViewModelActionsContainer",
+      "yt-reel-player-overlay-view-model reel-action-bar-view-model",
+      "yt-reel-player-overlay-view-model .ytReelPlayerOverlayViewModelActionsContainer",
+      "reel-action-bar-view-model",
+      ".ytReelPlayerOverlayViewModelActionsContainer",
       "ytd-reel-player-overlay-renderer #actions",
       "ytd-reel-player-overlay-renderer #actions-container",
       "ytd-reel-player-overlay-renderer [id='actions']",
@@ -101,7 +110,11 @@
 
     // YouTube regularly renames the action bar. Locate it structurally by
     // walking up from the current Like/Share controls inside the Shorts overlay.
-    const overlay = renderer.querySelector("ytd-reel-player-overlay-renderer") || renderer;
+    const overlay = renderer.querySelector([
+      "ytd-reel-player-overlay-renderer-cow",
+      "yt-reel-player-overlay-view-model",
+      "ytd-reel-player-overlay-renderer"
+    ].join(",")) || renderer;
     const controls = [...overlay.querySelectorAll([
       "button[aria-label*='like' i]",
       "button[aria-label*='share' i]",
@@ -224,24 +237,30 @@
     button.style.bottom = `${bottom}px`;
   }
 
+  function removeFallback() {
+    fallbackButton?.remove();
+    fallbackButton = null;
+    fallbackRenderer = null;
+  }
+
   function injectButton(renderer) {
     const actionBar = findActionBar(renderer);
-    const existing = renderer.querySelector(`.${BUTTON_CLASS}`);
 
     if (actionBar) {
-      if (existing?.dataset.placement === "fallback") existing.remove();
+      removeFallback();
       if (!actionBar.querySelector(`.${BUTTON_CLASS}`)) {
         actionBar.appendChild(createButton(renderer, "actions"));
       }
       return;
     }
 
-    let fallback = existing;
-    if (!fallback) {
-      fallback = createButton(renderer, "fallback");
-      renderer.appendChild(fallback);
+    if (!fallbackButton || fallbackRenderer !== renderer || !fallbackButton.isConnected) {
+      removeFallback();
+      fallbackButton = createButton(renderer, "fallback");
+      fallbackRenderer = renderer;
+      document.body.appendChild(fallbackButton);
     }
-    if (fallback.dataset.placement === "fallback") positionFallback(fallback, renderer);
+    positionFallback(fallbackButton, renderer);
   }
 
   function skipIfBlocked(renderer) {
@@ -255,12 +274,12 @@
   }
 
   function scan() {
-    if (!isShortsPage()) return;
+    if (!isShortsPage()) {
+      removeFallback();
+      return;
+    }
     const renderer = activeRenderer();
     if (!renderer) return;
-    document.querySelectorAll(`.${BUTTON_CLASS}[data-placement='fallback']`).forEach((button) => {
-      if (!renderer.contains(button)) button.remove();
-    });
     injectButton(renderer);
     skipIfBlocked(renderer);
   }
