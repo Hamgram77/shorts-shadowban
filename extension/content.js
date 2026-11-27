@@ -62,6 +62,11 @@
 
   function activeRenderer() {
     const renderers = [...document.querySelectorAll("ytd-reel-video-renderer")];
+    const explicitlyActive = renderers.find((renderer) =>
+      (renderer.hasAttribute("is-active") || renderer.hasAttribute("active")) &&
+      !renderer.hidden && renderer.getAttribute("aria-hidden") !== "true"
+    );
+    if (explicitlyActive) return explicitlyActive;
     return renderers
       .filter((renderer) => !renderer.hidden && renderer.getAttribute("aria-hidden") !== "true")
       .sort((a, b) => visibleArea(b) - visibleArea(a))[0] || null;
@@ -78,7 +83,45 @@
   }
 
   function findActionBar(renderer) {
-    return renderer?.querySelector("#actions, #actions-container, ytd-reel-player-overlay-renderer #actions") || null;
+    if (!renderer) return null;
+
+    const knownSelectors = [
+      "ytd-reel-player-overlay-renderer #actions",
+      "ytd-reel-player-overlay-renderer #actions-container",
+      "ytd-reel-player-overlay-renderer [id='actions']",
+      "#actions",
+      "#actions-container",
+      ".action-container",
+      "[class*='action-buttons']"
+    ];
+    for (const selector of knownSelectors) {
+      const match = renderer.querySelector(selector);
+      if (match) return match;
+    }
+
+    // YouTube regularly renames the action bar. Locate it structurally by
+    // walking up from the current Like/Share controls inside the Shorts overlay.
+    const overlay = renderer.querySelector("ytd-reel-player-overlay-renderer") || renderer;
+    const controls = [...overlay.querySelectorAll([
+      "button[aria-label*='like' i]",
+      "button[aria-label*='share' i]",
+      "#like-button",
+      "#share-button",
+      "ytd-like-button-renderer"
+    ].join(","))];
+
+    for (const control of controls) {
+      let candidate = control.parentElement;
+      for (let depth = 0; candidate && candidate !== overlay && depth < 6; depth += 1) {
+        const buttons = candidate.querySelectorAll("button, yt-button-shape");
+        const hasLike = candidate.querySelector("button[aria-label*='like' i], #like-button, ytd-like-button-renderer");
+        const hasShare = candidate.querySelector("button[aria-label*='share' i], #share-button");
+        if (buttons.length >= 2 && (hasLike || hasShare)) return candidate;
+        candidate = candidate.parentElement;
+      }
+    }
+
+    return null;
   }
 
   function addStyles() {
@@ -108,6 +151,11 @@
       .${BUTTON_CLASS}:hover { background: #d71920; transform: scale(1.08); }
       .${BUTTON_CLASS}:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
       .${BUTTON_CLASS}[data-saving='true'] { opacity: .65; pointer-events: none; }
+      .${BUTTON_CLASS}[data-placement='fallback'] {
+        margin: 0;
+        position: fixed;
+        z-index: 2147483646;
+      }
     `;
     document.documentElement.appendChild(style);
   }
@@ -151,13 +199,11 @@
     setTimeout(() => { button.dataset.saving = "false"; }, 500);
   }
 
-  function injectButton(renderer) {
-    const actionBar = findActionBar(renderer);
-    if (!actionBar || actionBar.querySelector(`.${BUTTON_CLASS}`)) return;
-
+  function createButton(renderer, placement) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = BUTTON_CLASS;
+    button.dataset.placement = placement;
     button.textContent = "🚫";
     button.title = "Shadowban Channel";
     button.setAttribute("aria-label", "Shadowban Channel");
@@ -166,7 +212,36 @@
       event.stopPropagation();
       void blockAndSkip(renderer, button);
     });
-    actionBar.appendChild(button);
+    return button;
+  }
+
+  function positionFallback(button, renderer) {
+    const player = renderer.querySelector("#player-container, #player, ytd-player, video") || renderer;
+    const rect = player.getBoundingClientRect();
+    const right = Math.max(12, innerWidth - Math.min(rect.right, innerWidth) + 16);
+    const bottom = Math.max(82, innerHeight - Math.min(rect.bottom, innerHeight) + 24);
+    button.style.right = `${right}px`;
+    button.style.bottom = `${bottom}px`;
+  }
+
+  function injectButton(renderer) {
+    const actionBar = findActionBar(renderer);
+    const existing = renderer.querySelector(`.${BUTTON_CLASS}`);
+
+    if (actionBar) {
+      if (existing?.dataset.placement === "fallback") existing.remove();
+      if (!actionBar.querySelector(`.${BUTTON_CLASS}`)) {
+        actionBar.appendChild(createButton(renderer, "actions"));
+      }
+      return;
+    }
+
+    let fallback = existing;
+    if (!fallback) {
+      fallback = createButton(renderer, "fallback");
+      renderer.appendChild(fallback);
+    }
+    if (fallback.dataset.placement === "fallback") positionFallback(fallback, renderer);
   }
 
   function skipIfBlocked(renderer) {
@@ -183,6 +258,9 @@
     if (!isShortsPage()) return;
     const renderer = activeRenderer();
     if (!renderer) return;
+    document.querySelectorAll(`.${BUTTON_CLASS}[data-placement='fallback']`).forEach((button) => {
+      if (!renderer.contains(button)) button.remove();
+    });
     injectButton(renderer);
     skipIfBlocked(renderer);
   }
