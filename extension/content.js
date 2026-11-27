@@ -1,8 +1,9 @@
 (() => {
   "use strict";
 
-  if (window.__shortsShadowbanLoaded) return;
-  window.__shortsShadowbanLoaded = true;
+  const SCRIPT_VERSION = "1.0.2";
+  if (window.__shortsShadowbanVersion === SCRIPT_VERSION) return;
+  window.__shortsShadowbanVersion = SCRIPT_VERSION;
 
   const STORAGE_KEY = "shortsShadowbanHandles";
   const BUTTON_CLASS = "shorts-shadowban-button";

@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Shorts Shadowban",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Permanently skip YouTube Shorts from channels you do not want to see.",
-  "permissions": ["storage"],
+  "permissions": ["storage", "scripting"],
   "host_permissions": [
     "*://youtube.com/*",
     "*://www.youtube.com/*",
@@ -12,14 +12,17 @@
   "content_scripts": [
     {
       "matches": [
-        "*://youtube.com/shorts/*",
-        "*://www.youtube.com/shorts/*",
-        "*://m.youtube.com/shorts/*"
+        "*://youtube.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_title": "Shorts Shadowban",
     "default_popup": "popup.html"
