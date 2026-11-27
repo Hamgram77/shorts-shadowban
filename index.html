@@ -6,7 +6,7 @@
   <meta name="description" content="Shorts Shadowban permanently skips YouTube Shorts from channels you never want to see again.">
   <meta name="theme-color" content="#090a0e">
   <title>Shorts Shadowban — Take back your Shorts feed</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=20261127-tabs">
   <meta name="google-site-verification" content="qNuObu2RHrX6sKwxbCZ5j013WckDOmJqqZO2w8SiCCM" />
 </head>
 <body>
@@ -68,34 +68,79 @@
         <h2 id="setup-title">Pick your platform.</h2>
       </div>
 
-      <div class="platform" id="chromium">
-        <div class="platform-title"><span>01</span><div><p>Chrome · Brave · Edge</p><h3>Install the extension</h3></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Download and unzip</strong><p>Click “Download Extension (.zip)” above, then extract <code>shorts-shadowban.zip</code>.</p></div></li>
-          <li><span>2</span><div><strong>Open extensions</strong><p>Visit <code>chrome://extensions</code>, <code>brave://extensions</code>, or <code>edge://extensions</code>.</p></div></li>
-          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on the Developer mode switch in the top-right corner.</p></div></li>
-          <li><span>4</span><div><strong>Load the folder</strong><p>Choose “Load unpacked” and select the extracted <code>extension/</code> folder—the one containing <code>manifest.json</code>.</p></div></li>
-        </ol>
+      <div class="platform-tabs" role="tablist" aria-label="Installation instructions">
+        <button class="platform-tab" id="tab-chrome" role="tab" aria-selected="true" aria-controls="panel-chrome" tabindex="0">Chrome</button>
+        <button class="platform-tab" id="tab-brave" role="tab" aria-selected="false" aria-controls="panel-brave" tabindex="-1">Brave</button>
+        <button class="platform-tab" id="tab-edge" role="tab" aria-selected="false" aria-controls="panel-edge" tabindex="-1">Edge</button>
+        <button class="platform-tab" id="tab-mac" role="tab" aria-selected="false" aria-controls="panel-mac" tabindex="-1">Mac Safari</button>
+        <button class="platform-tab" id="tab-ios" role="tab" aria-selected="false" aria-controls="panel-ios" tabindex="-1">iPhone / iPad</button>
       </div>
 
-      <div class="platform" id="mac-safari">
-        <div class="platform-title"><span>02</span><div><p>Mac Safari</p><h3>Convert with Xcode</h3></div></div>
+      <div class="platform" id="panel-chrome" role="tabpanel" aria-labelledby="tab-chrome">
+        <div class="platform-title"><span>01</span><div><p>Google Chrome</p><h3>Load and activate</h3><small>Windows, macOS, Linux, or ChromeOS</small></div></div>
         <ol class="steps">
-          <li><span>1</span><div><strong>Download and unzip</strong><p>Extract the ZIP and locate the included <code>extension/</code> folder.</p></div></li>
-          <li><span>2</span><div><strong>Convert the web extension</strong><p>In Terminal run <code>xcrun safari-web-extension-converter /path/to/extension</code>. Xcode creates a Safari app project.</p></div></li>
-          <li><span>3</span><div><strong>Build and enable</strong><p>Run the project in Xcode, then open Safari → Settings → Extensions and enable Shorts Shadowban.</p></div></li>
-          <li><span>4</span><div><strong>Allow YouTube access</strong><p>When Safari asks, allow the extension on <code>youtube.com</code>.</p></div></li>
+          <li><span>1</span><div><strong>Download and extract the ZIP</strong><p>Use the download button above. Open <code>shorts-shadowban.zip</code> and extract it somewhere permanent—do not load the extension from inside the ZIP.</p></div></li>
+          <li><span>2</span><div><strong>Open Chrome’s extension manager</strong><p>Type <code>chrome://extensions</code> in the address bar and press Enter.</p></div></li>
+          <li><span>3</span><div><strong>Turn on Developer mode</strong><p>Enable the switch in the upper-right corner. The “Load unpacked” button will appear.</p></div></li>
+          <li><span>4</span><div><strong>Select the correct folder</strong><p>Click “Load unpacked,” open the extracted download, and select <code>extension/</code>. Confirm that <code>manifest.json</code> is directly inside the folder you select.</p></div></li>
+          <li><span>5</span><div><strong>Pin Shorts Shadowban</strong><p>Click Chrome’s puzzle-piece icon, then the pin beside Shorts Shadowban. The toolbar popup lets you unblock channels later.</p></div></li>
+          <li><span>6</span><div><strong>Allow YouTube and test it</strong><p>Open <code>youtube.com/shorts</code>. If Chrome asks for site access, choose Allow. The 🚫 button should appear beside Like and Share automatically.</p></div></li>
         </ol>
+        <p class="activation-check"><strong>Installed correctly?</strong> The extension card says version 1.0.2 or later, its popup opens, and the Shorts action column contains 🚫.</p>
       </div>
 
-      <div class="platform" id="ios-safari">
-        <div class="platform-title"><span>03</span><div><p>iPad · iPhone Safari</p><h3>Use the bookmarklet</h3></div></div>
+      <div class="platform" id="panel-brave" role="tabpanel" aria-labelledby="tab-brave" hidden>
+        <div class="platform-title"><span>02</span><div><p>Brave Browser</p><h3>Load and activate</h3><small>Desktop Brave</small></div></div>
         <ol class="steps">
-          <li><span>1</span><div><strong>Create any bookmark</strong><p>In Safari, bookmark this page. Open Bookmarks, tap Edit, then select the new bookmark.</p></div></li>
-          <li><span>2</span><div><strong>Copy the code</strong><p>Tap “Copy Bookmarklet Code” above and replace the bookmark’s address with the copied <code>javascript:</code> code.</p></div></li>
-          <li><span>3</span><div><strong>Name and save it</strong><p>Call it “🚫 Shadowban Shorts,” save it, then visit <code>youtube.com/shorts</code> in Safari. Bookmarklets cannot run inside the YouTube app.</p></div></li>
-          <li><span>4</span><div><strong>Activate, then enter Shorts</strong><p>While on any YouTube page in Safari, open the bookmark once. Now enter Shorts—the 🚫 button appears automatically beside the action controls.</p></div></li>
+          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP, extract it, and locate the inner <code>extension/</code> folder containing <code>manifest.json</code>.</p></div></li>
+          <li><span>2</span><div><strong>Open Brave extensions</strong><p>Type <code>brave://extensions</code> in the address bar and press Enter.</p></div></li>
+          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on Developer mode in the upper-right corner.</p></div></li>
+          <li><span>4</span><div><strong>Load the extension</strong><p>Choose “Load unpacked” and select the extracted <code>extension/</code> folder, not the repository root or ZIP file.</p></div></li>
+          <li><span>5</span><div><strong>Pin and allow access</strong><p>Pin Shorts Shadowban from Brave’s Extensions menu. Open its Details page and verify that access to <code>youtube.com</code> is allowed.</p></div></li>
+          <li><span>6</span><div><strong>Open Shorts</strong><p>Visit <code>youtube.com/shorts</code>. If Brave Shields blocks page behavior, leave Shields enabled first; only test with Shields lowered if the 🚫 button does not appear.</p></div></li>
         </ol>
+        <p class="activation-check"><strong>Updating later:</strong> Replace the extracted files, then return to <code>brave://extensions</code> and click Reload on the extension card.</p>
+      </div>
+
+      <div class="platform" id="panel-edge" role="tabpanel" aria-labelledby="tab-edge" hidden>
+        <div class="platform-title"><span>03</span><div><p>Microsoft Edge</p><h3>Sideload and activate</h3><small>Desktop Edge</small></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP and extract it. Find <code>extension/manifest.json</code> before continuing.</p></div></li>
+          <li><span>2</span><div><strong>Open Edge extensions</strong><p>Type <code>edge://extensions</code> in the address bar and press Enter.</p></div></li>
+          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on Developer mode using the switch in the left sidebar.</p></div></li>
+          <li><span>4</span><div><strong>Load unpacked</strong><p>Click “Load unpacked,” select the extracted <code>extension/</code> directory, and choose Select Folder.</p></div></li>
+          <li><span>5</span><div><strong>Show it on the toolbar</strong><p>Open Edge’s Extensions menu and select the eye icon beside Shorts Shadowban so its unblock menu stays accessible.</p></div></li>
+          <li><span>6</span><div><strong>Verify YouTube access</strong><p>Open the extension’s Details page, confirm site access includes YouTube, then visit <code>youtube.com/shorts</code>.</p></div></li>
+        </ol>
+        <p class="activation-check"><strong>Expected result:</strong> 🚫 appears automatically in the active Short’s Like/Share column and the toolbar popup lists blocked handles.</p>
+      </div>
+
+      <div class="platform" id="panel-mac" role="tabpanel" aria-labelledby="tab-mac" hidden>
+        <div class="platform-title"><span>04</span><div><p>Safari on macOS</p><h3>Quick test or permanent app</h3><small>Safari 17 or later recommended</small></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP and extract the included <code>extension/</code> folder.</p></div></li>
+          <li><span>2</span><div><strong>Quick test: enable Developer features</strong><p>In Safari choose Settings → Advanced and enable “Show features for web developers.” Open Settings → Developer and turn on “Allow unsigned extensions.”</p></div></li>
+          <li><span>3</span><div><strong>Quick test: add the folder</strong><p>In Safari Settings → Developer choose “Add Temporary Extension…” and select <code>extension/</code>. Temporary extensions are removed when Safari quits or after 24 hours.</p></div></li>
+          <li><span>4</span><div><strong>Permanent route: package with Xcode</strong><p>Install Xcode. In Terminal run <code>xcrun safari-web-extension-packager /path/to/extension</code>. Choose Swift when prompted; the packager opens a generated Xcode project.</p></div></li>
+          <li><span>5</span><div><strong>Build the macOS app</strong><p>In Xcode select the macOS app scheme, choose your Mac as the destination, configure a Signing Team if requested, then press Run.</p></div></li>
+          <li><span>6</span><div><strong>Enable and authorize it</strong><p>Open Safari → Settings → Extensions, check Shorts Shadowban, and set its website access for <code>youtube.com</code> to Allow.</p></div></li>
+          <li><span>7</span><div><strong>Test Shorts</strong><p>Open <code>youtube.com/shorts</code>. The 🚫 control should appear beside Like and Share. Use the Safari toolbar extension button to manage blocked channels.</p></div></li>
+        </ol>
+        <p class="activation-check"><strong>Unsigned build note:</strong> Safari’s “Allow unsigned extensions” setting resets when Safari quits. A signed Xcode build avoids the temporary-development workflow.</p>
+      </div>
+
+      <div class="platform" id="panel-ios" role="tabpanel" aria-labelledby="tab-ios" hidden>
+        <div class="platform-title"><span>05</span><div><p>iPhone · iPad Safari</p><h3>Activate the bookmarklet</h3><small>No app download required</small></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Copy the current code</strong><p>Scroll to the green “Zero-download mode” section and tap “Copy Bookmarklet Code.” Recopy it whenever the bookmarklet is updated.</p></div></li>
+          <li><span>2</span><div><strong>Create a temporary bookmark</strong><p>In Safari, tap Share → Add Bookmark. Save this page as any bookmark; its current address will be replaced next.</p></div></li>
+          <li><span>3</span><div><strong>Edit the bookmark</strong><p>Open Safari’s bookmarks, tap Edit, choose the bookmark, rename it “🚫 Shadowban Shorts,” delete its address, and paste the copied code. It must begin with <code>javascript:</code>.</p></div></li>
+          <li><span>4</span><div><strong>Stay in Safari</strong><p>Open <code>youtube.com</code> directly in Safari. Do not switch to the YouTube app—bookmarklets cannot run inside another app.</p></div></li>
+          <li><span>5</span><div><strong>Activate once per loaded tab</strong><p>While on YouTube, open the “🚫 Shadowban Shorts” bookmark. Dismiss the activation message, then enter Shorts in the same tab.</p></div></li>
+          <li><span>6</span><div><strong>Use the action button</strong><p>The 🚫 control appears beside Like and Share. Tap it to save that creator locally and advance to the next Short.</p></div></li>
+          <li><span>7</span><div><strong>Reactivate after reload</strong><p>Safari security prevents bookmarklets from auto-running after a page reload, closed tab, or new tab. Open the bookmark once again; normal movement within that YouTube tab remains active.</p></div></li>
+        </ol>
+        <p class="activation-check"><strong>If nothing happens:</strong> Edit the bookmark and confirm its address starts with <code>javascript:</code>, use Safari rather than the YouTube app, and make sure Private Browsing is off so the blocklist can be stored.</p>
       </div>
     </section>
 
@@ -131,6 +176,35 @@
     const shell = document.getElementById("video-shell");
     video.addEventListener("loadedmetadata", () => shell.classList.add("has-video"));
     video.addEventListener("error", () => shell.classList.remove("has-video"));
+
+    const platformTabs = [...document.querySelectorAll(".platform-tab[role='tab']")];
+    function selectPlatform(tab, moveFocus = false) {
+      platformTabs.forEach((item) => {
+        const selected = item === tab;
+        item.setAttribute("aria-selected", String(selected));
+        item.tabIndex = selected ? 0 : -1;
+        document.getElementById(item.getAttribute("aria-controls")).hidden = !selected;
+      });
+      const tabList = tab.parentElement;
+      tabList.scrollTo({
+        left: tab.offsetLeft - (tabList.clientWidth - tab.offsetWidth) / 2,
+        behavior: "smooth"
+      });
+      if (moveFocus) tab.focus();
+    }
+    platformTabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => selectPlatform(tab));
+      tab.addEventListener("keydown", (event) => {
+        let nextIndex = null;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % platformTabs.length;
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + platformTabs.length) % platformTabs.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = platformTabs.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        selectPlatform(platformTabs[nextIndex], true);
+      });
+    });
 
     const bookmarklet = document.getElementById("bookmarklet-link");
     const copyButton = document.getElementById("copy-bookmarklet");
