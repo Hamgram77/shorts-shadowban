@@ -21,7 +21,7 @@
       <p class="lede">One click to permanently erase AI-voiceover and spam channels from YouTube Shorts.</p>
       <div class="hero-actions">
         <a class="button button-primary" href="./shorts-shadowban.zip" download>Download Extension (.zip)</a>
-        <a class="button button-quiet" href="#bookmarklet">No-download option ↓</a>
+        <a class="button button-quiet" href="#bookmarklet">On iPad or iPhone? ↓</a>
       </div>
       <p class="privacy-note">No account. No cloud. Your blocklist stays on your device.</p>
     </section>
@@ -111,6 +111,21 @@
   <footer><div class="wrap"><span>🚫 Shorts Shadowban</span><span>MIT licensed · No tracking · No dependencies</span></div></footer>
 
   <script>
+    // Always introduce visitors at the download hero. In-page links still
+    // scroll normally after the page has loaded.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (location.hash) {
+      history.replaceState(null, "", `${location.pathname}${location.search}`);
+    }
+    addEventListener("pageshow", () => {
+      requestAnimationFrame(() => {
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = "auto";
+        scrollTo(0, 0);
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      });
+    }, { once: true });
+
     const video = document.getElementById("demo-video");
     const shell = document.getElementById("video-shell");
     video.addEventListener("loadedmetadata", () => shell.classList.add("has-video"));
