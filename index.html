@@ -6,7 +6,7 @@
   <meta name="description" content="Shorts Shadowban permanently skips YouTube Shorts from channels you never want to see again.">
   <meta name="theme-color" content="#090a0e">
   <title>Shorts Shadowban — Take back your Shorts feed</title>
-  <link rel="stylesheet" href="./style.css?v=20261127-tabs">
+  <link rel="stylesheet" href="./style.css?v=20261127-subtabs">
   <meta name="google-site-verification" content="qNuObu2RHrX6sKwxbCZ5j013WckDOmJqqZO2w8SiCCM" />
 </head>
 <body>
@@ -78,69 +78,190 @@
 
       <div class="platform" id="panel-chrome" role="tabpanel" aria-labelledby="tab-chrome">
         <div class="platform-title"><span>01</span><div><p>Google Chrome</p><h3>Load and activate</h3><small>Windows, macOS, Linux, or ChromeOS</small></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Download and extract the ZIP</strong><p>Use the download button above. Open <code>shorts-shadowban.zip</code> and extract it somewhere permanent—do not load the extension from inside the ZIP.</p></div></li>
-          <li><span>2</span><div><strong>Open Chrome’s extension manager</strong><p>Type <code>chrome://extensions</code> in the address bar and press Enter.</p></div></li>
-          <li><span>3</span><div><strong>Turn on Developer mode</strong><p>Enable the switch in the upper-right corner. The “Load unpacked” button will appear.</p></div></li>
-          <li><span>4</span><div><strong>Select the correct folder</strong><p>Click “Load unpacked,” open the extracted download, and select <code>extension/</code>. Confirm that <code>manifest.json</code> is directly inside the folder you select.</p></div></li>
-          <li><span>5</span><div><strong>Pin Shorts Shadowban</strong><p>Click Chrome’s puzzle-piece icon, then the pin beside Shorts Shadowban. The toolbar popup lets you unblock channels later.</p></div></li>
-          <li><span>6</span><div><strong>Allow YouTube and test it</strong><p>Open <code>youtube.com/shorts</code>. If Chrome asks for site access, choose Allow. The 🚫 button should appear beside Like and Share automatically.</p></div></li>
-        </ol>
-        <p class="activation-check"><strong>Installed correctly?</strong> The extension card says version 1.0.2 or later, its popup opens, and the Shorts action column contains 🚫.</p>
+        <div class="platform-guide">
+          <div class="subtabs" role="tablist" aria-label="Chrome setup sections">
+            <button class="subtab" id="chrome-install-tab" role="tab" aria-selected="true" aria-controls="chrome-install">1. Install</button>
+            <button class="subtab" id="chrome-activate-tab" role="tab" aria-selected="false" aria-controls="chrome-activate" tabindex="-1">2. Activate</button>
+            <button class="subtab" id="chrome-test-tab" role="tab" aria-selected="false" aria-controls="chrome-test" tabindex="-1">3. Test &amp; fix</button>
+          </div>
+          <div class="subpanel" id="chrome-install" role="tabpanel" aria-labelledby="chrome-install-tab">
+            <ol class="steps">
+              <li><span>1</span><div><strong>Download the archive</strong><p>Return to the top of this page and choose “Download Extension (.zip).” Save <code>shorts-shadowban.zip</code> somewhere you can find again.</p></div></li>
+              <li><span>2</span><div><strong>Extract it permanently</strong><p>Right-click the ZIP and choose Extract All. Move the extracted folder somewhere permanent; Chrome loses unpacked extensions if their files are moved or deleted.</p></div></li>
+              <li><span>3</span><div><strong>Find the manifest folder</strong><p>Open the extracted download. The correct folder is <code>extension/</code>, with <code>manifest.json</code>, <code>content.js</code>, and <code>popup.html</code> directly inside it.</p></div></li>
+              <li><span>4</span><div><strong>Open extension management</strong><p>Type <code>chrome://extensions</code> into Chrome’s address bar and press Enter. Turn on Developer mode in the upper-right corner.</p></div></li>
+              <li><span>5</span><div><strong>Load unpacked</strong><p>Click “Load unpacked,” select the <code>extension/</code> folder, and click Select Folder. A Shorts Shadowban card should appear without errors.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="chrome-activate" role="tabpanel" aria-labelledby="chrome-activate-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Pin the toolbar button</strong><p>Click Chrome’s puzzle-piece icon and then the pin beside Shorts Shadowban. Click the new toolbar icon once to confirm the unblock popup opens.</p></div></li>
+              <li><span>2</span><div><strong>Confirm site access</strong><p>On <code>chrome://extensions</code>, open Shorts Shadowban → Details. Under Site access, ensure YouTube is allowed. The manifest requests access only to YouTube pages.</p></div></li>
+              <li><span>3</span><div><strong>Open Shorts</strong><p>Visit <code>https://www.youtube.com/shorts</code>. The extension also activates if YouTube was already open when it was installed.</p></div></li>
+              <li><span>4</span><div><strong>Locate the control</strong><p>Wait for the first Short to finish loading. 🚫 appears in the right-side vertical action column beside Like, Comments, Share, and Remix.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="chrome-test" role="tabpanel" aria-labelledby="chrome-test-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Test a channel</strong><p>Tap 🚫 on a Short. The creator’s <code>@handle</code> should be saved and the feed should immediately advance.</p></div></li>
+              <li><span>2</span><div><strong>Check the popup</strong><p>Open the toolbar popup. The blocked handle should be listed; choose Unblock to restore that creator.</p></div></li>
+              <li><span>3</span><div><strong>If the button is missing</strong><p>Return to <code>chrome://extensions</code>, confirm the extension is enabled, click Reload on its card, and check its Details page for YouTube site access.</p></div></li>
+              <li><span>4</span><div><strong>Update the extension</strong><p>Replace the old extracted files with the latest download, then click Reload on the extension card. You do not need to remove your saved blocklist.</p></div></li>
+            </ol>
+            <p class="activation-check"><strong>Success check:</strong> Version 1.0.2 or later is enabled, the popup opens, 🚫 appears in Shorts, and blocked handles show in the popup.</p>
+          </div>
+        </div>
       </div>
 
       <div class="platform" id="panel-brave" role="tabpanel" aria-labelledby="tab-brave" hidden>
         <div class="platform-title"><span>02</span><div><p>Brave Browser</p><h3>Load and activate</h3><small>Desktop Brave</small></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP, extract it, and locate the inner <code>extension/</code> folder containing <code>manifest.json</code>.</p></div></li>
-          <li><span>2</span><div><strong>Open Brave extensions</strong><p>Type <code>brave://extensions</code> in the address bar and press Enter.</p></div></li>
-          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on Developer mode in the upper-right corner.</p></div></li>
-          <li><span>4</span><div><strong>Load the extension</strong><p>Choose “Load unpacked” and select the extracted <code>extension/</code> folder, not the repository root or ZIP file.</p></div></li>
-          <li><span>5</span><div><strong>Pin and allow access</strong><p>Pin Shorts Shadowban from Brave’s Extensions menu. Open its Details page and verify that access to <code>youtube.com</code> is allowed.</p></div></li>
-          <li><span>6</span><div><strong>Open Shorts</strong><p>Visit <code>youtube.com/shorts</code>. If Brave Shields blocks page behavior, leave Shields enabled first; only test with Shields lowered if the 🚫 button does not appear.</p></div></li>
-        </ol>
-        <p class="activation-check"><strong>Updating later:</strong> Replace the extracted files, then return to <code>brave://extensions</code> and click Reload on the extension card.</p>
+        <div class="platform-guide">
+          <div class="subtabs" role="tablist" aria-label="Brave setup sections">
+            <button class="subtab" id="brave-install-tab" role="tab" aria-selected="true" aria-controls="brave-install">1. Install</button>
+            <button class="subtab" id="brave-activate-tab" role="tab" aria-selected="false" aria-controls="brave-activate" tabindex="-1">2. Activate</button>
+            <button class="subtab" id="brave-test-tab" role="tab" aria-selected="false" aria-controls="brave-test" tabindex="-1">3. Test &amp; fix</button>
+          </div>
+          <div class="subpanel" id="brave-install" role="tabpanel" aria-labelledby="brave-install-tab">
+            <ol class="steps">
+              <li><span>1</span><div><strong>Download and extract</strong><p>Download <code>shorts-shadowban.zip</code>, extract it to a permanent location, and open the resulting folder.</p></div></li>
+              <li><span>2</span><div><strong>Verify the source folder</strong><p>Find <code>extension/</code>. It is correct when <code>manifest.json</code> is immediately visible inside it.</p></div></li>
+              <li><span>3</span><div><strong>Open Brave extensions</strong><p>Enter <code>brave://extensions</code> in the address bar and enable Developer mode in the upper-right corner.</p></div></li>
+              <li><span>4</span><div><strong>Load unpacked</strong><p>Click “Load unpacked,” choose <code>extension/</code>, and confirm. Do not choose the outer download folder or the ZIP itself.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="brave-activate" role="tabpanel" aria-labelledby="brave-activate-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Pin the extension</strong><p>Open Brave’s Extensions menu and pin Shorts Shadowban so the unblock popup remains easy to reach.</p></div></li>
+              <li><span>2</span><div><strong>Allow YouTube</strong><p>Open the extension’s Details page and confirm site access is enabled for <code>youtube.com</code>.</p></div></li>
+              <li><span>3</span><div><strong>Visit Shorts</strong><p>Open <code>https://www.youtube.com/shorts</code> and wait for the active video and its action buttons to load.</p></div></li>
+              <li><span>4</span><div><strong>Find 🚫</strong><p>The new circular control appears in the same right-side column as Like, Comments, Share, and Remix.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="brave-test" role="tabpanel" aria-labelledby="brave-test-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Block and verify</strong><p>Tap 🚫, confirm the next Short opens, then check the extension popup for the creator’s handle.</p></div></li>
+              <li><span>2</span><div><strong>Check Brave Shields</strong><p>Keep Shields enabled normally. If the button never appears, temporarily lower Shields for YouTube to determine whether a custom Shields setting is blocking page scripts.</p></div></li>
+              <li><span>3</span><div><strong>Reload the package</strong><p>On <code>brave://extensions</code>, click Reload on the extension card after updating its files or if the service worker reports an error.</p></div></li>
+              <li><span>4</span><div><strong>Restore a creator</strong><p>Open the pinned toolbar popup and choose Unblock beside the handle. The change is stored locally and takes effect immediately.</p></div></li>
+            </ol>
+            <p class="activation-check"><strong>Success check:</strong> The popup opens, YouTube access is enabled, and tapping 🚫 advances the feed and records the handle.</p>
+          </div>
+        </div>
       </div>
 
       <div class="platform" id="panel-edge" role="tabpanel" aria-labelledby="tab-edge" hidden>
         <div class="platform-title"><span>03</span><div><p>Microsoft Edge</p><h3>Sideload and activate</h3><small>Desktop Edge</small></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP and extract it. Find <code>extension/manifest.json</code> before continuing.</p></div></li>
-          <li><span>2</span><div><strong>Open Edge extensions</strong><p>Type <code>edge://extensions</code> in the address bar and press Enter.</p></div></li>
-          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on Developer mode using the switch in the left sidebar.</p></div></li>
-          <li><span>4</span><div><strong>Load unpacked</strong><p>Click “Load unpacked,” select the extracted <code>extension/</code> directory, and choose Select Folder.</p></div></li>
-          <li><span>5</span><div><strong>Show it on the toolbar</strong><p>Open Edge’s Extensions menu and select the eye icon beside Shorts Shadowban so its unblock menu stays accessible.</p></div></li>
-          <li><span>6</span><div><strong>Verify YouTube access</strong><p>Open the extension’s Details page, confirm site access includes YouTube, then visit <code>youtube.com/shorts</code>.</p></div></li>
-        </ol>
-        <p class="activation-check"><strong>Expected result:</strong> 🚫 appears automatically in the active Short’s Like/Share column and the toolbar popup lists blocked handles.</p>
+        <div class="platform-guide">
+          <div class="subtabs" role="tablist" aria-label="Edge setup sections">
+            <button class="subtab" id="edge-install-tab" role="tab" aria-selected="true" aria-controls="edge-install">1. Install</button>
+            <button class="subtab" id="edge-activate-tab" role="tab" aria-selected="false" aria-controls="edge-activate" tabindex="-1">2. Activate</button>
+            <button class="subtab" id="edge-test-tab" role="tab" aria-selected="false" aria-controls="edge-test" tabindex="-1">3. Test &amp; fix</button>
+          </div>
+          <div class="subpanel" id="edge-install" role="tabpanel" aria-labelledby="edge-install-tab">
+            <ol class="steps">
+              <li><span>1</span><div><strong>Download and extract</strong><p>Save the ZIP, choose Extract All, and keep the extracted files in a permanent folder.</p></div></li>
+              <li><span>2</span><div><strong>Locate <code>manifest.json</code></strong><p>Open <code>extension/</code> and confirm the manifest sits directly inside that directory.</p></div></li>
+              <li><span>3</span><div><strong>Open Edge extensions</strong><p>Type <code>edge://extensions</code> in the address bar. Enable Developer mode using the switch in the left sidebar.</p></div></li>
+              <li><span>4</span><div><strong>Sideload the folder</strong><p>Choose “Load unpacked,” select <code>extension/</code>, and click Select Folder. Edge should display a Shorts Shadowban extension card.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="edge-activate" role="tabpanel" aria-labelledby="edge-activate-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Show the toolbar icon</strong><p>Open Edge’s Extensions menu and select the eye icon beside Shorts Shadowban.</p></div></li>
+              <li><span>2</span><div><strong>Review permissions</strong><p>Open Details and confirm the extension is enabled and allowed to read and change data on YouTube.</p></div></li>
+              <li><span>3</span><div><strong>Start YouTube Shorts</strong><p>Visit <code>https://www.youtube.com/shorts</code>. Existing YouTube tabs should receive the extension automatically.</p></div></li>
+              <li><span>4</span><div><strong>Confirm placement</strong><p>Look for 🚫 in the vertical control stack beside Like, Comments, Share, and Remix.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="edge-test" role="tabpanel" aria-labelledby="edge-test-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Run a blocking test</strong><p>Tap 🚫 on a test creator. Edge should immediately advance and the handle should appear in the toolbar popup.</p></div></li>
+              <li><span>2</span><div><strong>If 🚫 is absent</strong><p>Check that the selected unpacked directory contains <code>manifest.json</code>, then click Reload on <code>edge://extensions</code>.</p></div></li>
+              <li><span>3</span><div><strong>Inspect reported errors</strong><p>On the extension card, choose Errors if Edge shows one. A clean installation should show no manifest or service-worker errors.</p></div></li>
+              <li><span>4</span><div><strong>Update or unblock</strong><p>Reload after replacing extension files. Use the toolbar popup’s Unblock button to remove a saved handle.</p></div></li>
+            </ol>
+            <p class="activation-check"><strong>Success check:</strong> Edge shows no extension errors, 🚫 is visible, and the popup accurately reflects the local blocklist.</p>
+          </div>
+        </div>
       </div>
 
       <div class="platform" id="panel-mac" role="tabpanel" aria-labelledby="tab-mac" hidden>
         <div class="platform-title"><span>04</span><div><p>Safari on macOS</p><h3>Quick test or permanent app</h3><small>Safari 17 or later recommended</small></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP and extract the included <code>extension/</code> folder.</p></div></li>
-          <li><span>2</span><div><strong>Quick test: enable Developer features</strong><p>In Safari choose Settings → Advanced and enable “Show features for web developers.” Open Settings → Developer and turn on “Allow unsigned extensions.”</p></div></li>
-          <li><span>3</span><div><strong>Quick test: add the folder</strong><p>In Safari Settings → Developer choose “Add Temporary Extension…” and select <code>extension/</code>. Temporary extensions are removed when Safari quits or after 24 hours.</p></div></li>
-          <li><span>4</span><div><strong>Permanent route: package with Xcode</strong><p>Install Xcode. In Terminal run <code>xcrun safari-web-extension-packager /path/to/extension</code>. Choose Swift when prompted; the packager opens a generated Xcode project.</p></div></li>
-          <li><span>5</span><div><strong>Build the macOS app</strong><p>In Xcode select the macOS app scheme, choose your Mac as the destination, configure a Signing Team if requested, then press Run.</p></div></li>
-          <li><span>6</span><div><strong>Enable and authorize it</strong><p>Open Safari → Settings → Extensions, check Shorts Shadowban, and set its website access for <code>youtube.com</code> to Allow.</p></div></li>
-          <li><span>7</span><div><strong>Test Shorts</strong><p>Open <code>youtube.com/shorts</code>. The 🚫 control should appear beside Like and Share. Use the Safari toolbar extension button to manage blocked channels.</p></div></li>
-        </ol>
-        <p class="activation-check"><strong>Unsigned build note:</strong> Safari’s “Allow unsigned extensions” setting resets when Safari quits. A signed Xcode build avoids the temporary-development workflow.</p>
+        <div class="platform-guide">
+          <div class="subtabs" role="tablist" aria-label="Mac Safari setup sections">
+            <button class="subtab" id="mac-quick-tab" role="tab" aria-selected="true" aria-controls="mac-quick">1. Quick test</button>
+            <button class="subtab" id="mac-package-tab" role="tab" aria-selected="false" aria-controls="mac-package" tabindex="-1">2. Permanent app</button>
+            <button class="subtab" id="mac-activate-tab" role="tab" aria-selected="false" aria-controls="mac-activate" tabindex="-1">3. Enable &amp; test</button>
+          </div>
+          <div class="subpanel" id="mac-quick" role="tabpanel" aria-labelledby="mac-quick-tab">
+            <ol class="steps">
+              <li><span>1</span><div><strong>Download and extract</strong><p>Download the ZIP and extract <code>extension/</code> so Safari can read its manifest and scripts.</p></div></li>
+              <li><span>2</span><div><strong>Show developer features</strong><p>Open Safari → Settings → Advanced and enable “Show features for web developers.” A Developer tab appears in Safari Settings.</p></div></li>
+              <li><span>3</span><div><strong>Allow unsigned extensions</strong><p>Open Settings → Developer and enable “Allow unsigned extensions.” Authenticate with your Mac password if Safari asks.</p></div></li>
+              <li><span>4</span><div><strong>Add a temporary extension</strong><p>Choose “Add Temporary Extension…” and select <code>extension/</code>. Safari adds Shorts Shadowban to its Extensions settings.</p></div></li>
+              <li><span>5</span><div><strong>Understand the limit</strong><p>This quick test is removed when Safari quits or after 24 hours. Repeat these steps or use the Permanent app sub-tab for lasting installation.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="mac-package" role="tabpanel" aria-labelledby="mac-package-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Install Xcode</strong><p>Install and open the current Xcode release from Apple. Allow it to finish installing required components.</p></div></li>
+              <li><span>2</span><div><strong>Run Apple’s packager</strong><p>Open Terminal and run <code>xcrun safari-web-extension-packager /full/path/to/extension</code>. The older converter command has been replaced by this packager.</p></div></li>
+              <li><span>3</span><div><strong>Answer the prompts</strong><p>Choose Swift if asked, enable the macOS target, choose a project location, and let the tool open the generated Xcode project.</p></div></li>
+              <li><span>4</span><div><strong>Configure signing</strong><p>Select the project and its macOS app target. Under Signing &amp; Capabilities choose your Team and use a unique bundle identifier if Xcode reports a conflict.</p></div></li>
+              <li><span>5</span><div><strong>Build and run</strong><p>Select the macOS app scheme and your Mac as the destination, then press Run. Launching the containing app installs the web extension into Safari.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="mac-activate" role="tabpanel" aria-labelledby="mac-activate-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Enable the extension</strong><p>Open Safari → Settings → Extensions and check Shorts Shadowban in the left-hand list.</p></div></li>
+              <li><span>2</span><div><strong>Allow YouTube</strong><p>Set website access for <code>youtube.com</code> to Allow or Always Allow. If Safari uses Profiles, enable the extension for the active profile too.</p></div></li>
+              <li><span>3</span><div><strong>Open and test Shorts</strong><p>Visit <code>https://www.youtube.com/shorts</code>. 🚫 should appear beside Like and Share after the active Short loads.</p></div></li>
+              <li><span>4</span><div><strong>If it is missing</strong><p>Confirm the containing app was run at least once, recheck Safari’s Extensions and profile settings, then build the Xcode project again.</p></div></li>
+              <li><span>5</span><div><strong>Manage the blocklist</strong><p>Use the Safari toolbar extension button to open the popup and unblock saved handles.</p></div></li>
+            </ol>
+            <p class="activation-check"><strong>Unsigned-build note:</strong> “Allow unsigned extensions” resets when Safari quits. A properly signed app installation avoids that development-only reset.</p>
+          </div>
+        </div>
       </div>
 
       <div class="platform" id="panel-ios" role="tabpanel" aria-labelledby="tab-ios" hidden>
         <div class="platform-title"><span>05</span><div><p>iPhone · iPad Safari</p><h3>Activate the bookmarklet</h3><small>No app download required</small></div></div>
-        <ol class="steps">
-          <li><span>1</span><div><strong>Copy the current code</strong><p>Scroll to the green “Zero-download mode” section and tap “Copy Bookmarklet Code.” Recopy it whenever the bookmarklet is updated.</p></div></li>
-          <li><span>2</span><div><strong>Create a temporary bookmark</strong><p>In Safari, tap Share → Add Bookmark. Save this page as any bookmark; its current address will be replaced next.</p></div></li>
-          <li><span>3</span><div><strong>Edit the bookmark</strong><p>Open Safari’s bookmarks, tap Edit, choose the bookmark, rename it “🚫 Shadowban Shorts,” delete its address, and paste the copied code. It must begin with <code>javascript:</code>.</p></div></li>
-          <li><span>4</span><div><strong>Stay in Safari</strong><p>Open <code>youtube.com</code> directly in Safari. Do not switch to the YouTube app—bookmarklets cannot run inside another app.</p></div></li>
-          <li><span>5</span><div><strong>Activate once per loaded tab</strong><p>While on YouTube, open the “🚫 Shadowban Shorts” bookmark. Dismiss the activation message, then enter Shorts in the same tab.</p></div></li>
-          <li><span>6</span><div><strong>Use the action button</strong><p>The 🚫 control appears beside Like and Share. Tap it to save that creator locally and advance to the next Short.</p></div></li>
-          <li><span>7</span><div><strong>Reactivate after reload</strong><p>Safari security prevents bookmarklets from auto-running after a page reload, closed tab, or new tab. Open the bookmark once again; normal movement within that YouTube tab remains active.</p></div></li>
-        </ol>
-        <p class="activation-check"><strong>If nothing happens:</strong> Edit the bookmark and confirm its address starts with <code>javascript:</code>, use Safari rather than the YouTube app, and make sure Private Browsing is off so the blocklist can be stored.</p>
+        <div class="platform-guide">
+          <div class="subtabs" role="tablist" aria-label="iPhone and iPad setup sections">
+            <button class="subtab" id="ios-create-tab" role="tab" aria-selected="true" aria-controls="ios-create">1. Create bookmark</button>
+            <button class="subtab" id="ios-activate-tab" role="tab" aria-selected="false" aria-controls="ios-activate" tabindex="-1">2. Activate</button>
+            <button class="subtab" id="ios-use-tab" role="tab" aria-selected="false" aria-controls="ios-use" tabindex="-1">3. Use &amp; fix</button>
+          </div>
+          <div class="subpanel" id="ios-create" role="tabpanel" aria-labelledby="ios-create-tab">
+            <ol class="steps">
+              <li><span>1</span><div><strong>Use Safari for setup</strong><p>Open this website in Safari on the iPhone or iPad. The bookmarklet cannot be installed or run from inside the YouTube app, Chrome for iOS, or an in-app browser.</p></div></li>
+              <li><span>2</span><div><strong>Copy the latest code</strong><p>In the green Zero-download section, tap “Copy Bookmarklet Code.” The copied address begins with <code>javascript:</code> followed by encoded code.</p></div></li>
+              <li><span>3</span><div><strong>Create a placeholder bookmark</strong><p>Tap Safari’s Share button, choose Add Bookmark, and save this page. The page address is temporary and will be replaced.</p></div></li>
+              <li><span>4</span><div><strong>Open bookmark editing</strong><p>Tap Safari’s bookmarks icon, locate the new bookmark, tap Edit, and select it.</p></div></li>
+              <li><span>5</span><div><strong>Replace its name and address</strong><p>Name it “🚫 Shadowban Shorts.” Delete the entire existing URL, paste the copied bookmarklet address, and tap Done. Confirm the saved address still starts with <code>javascript:</code>.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="ios-activate" role="tabpanel" aria-labelledby="ios-activate-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Open YouTube in Safari</strong><p>Type <code>youtube.com</code> into Safari’s address bar. If iOS offers to open the YouTube app, stay in Safari.</p></div></li>
+              <li><span>2</span><div><strong>Run the bookmark once</strong><p>While the YouTube website is visible, open Safari’s bookmarks and tap “🚫 Shadowban Shorts.” A message confirms that Shorts Shadowban is active.</p></div></li>
+              <li><span>3</span><div><strong>Enter Shorts in the same tab</strong><p>Dismiss the message and tap Shorts on YouTube. Do not open a new tab. The script watches YouTube’s internal navigation in the currently activated tab.</p></div></li>
+              <li><span>4</span><div><strong>Locate 🚫</strong><p>After the active video loads, 🚫 appears in the same action column as Like and Share. If YouTube’s layout prevents that placement, it appears as a floating button near the lower-right corner.</p></div></li>
+              <li><span>5</span><div><strong>Know when to reactivate</strong><p>Run the bookmark again after reloading YouTube, closing the tab, opening a new tab, or reopening Safari. iOS prevents bookmarklets from auto-running on fresh page loads.</p></div></li>
+            </ol>
+          </div>
+          <div class="subpanel" id="ios-use" role="tabpanel" aria-labelledby="ios-use-tab" hidden>
+            <ol class="steps">
+              <li><span>1</span><div><strong>Shadowban a creator</strong><p>Tap 🚫. The script reads the visible creator’s <code>@handle</code>, saves it in YouTube’s local Safari storage, and advances to the next Short.</p></div></li>
+              <li><span>2</span><div><strong>Confirm automatic skipping</strong><p>If the same handle appears later in the activated tab, the script advances automatically.</p></div></li>
+              <li><span>3</span><div><strong>If the bookmark does nothing</strong><p>Edit it and confirm the address begins exactly with <code>javascript:</code>. Recopy the current code from this page if the saved bookmark uses an older version.</p></div></li>
+              <li><span>4</span><div><strong>If 🚫 does not appear</strong><p>Confirm you are on <code>youtube.com</code> in Safari, not the YouTube app. Run the bookmark while YouTube is open, dismiss its activation message, then enter Shorts in that same tab.</p></div></li>
+              <li><span>5</span><div><strong>If saving fails</strong><p>Turn off Private Browsing for this tab and allow website data. Safari needs local storage to remember blocked handles.</p></div></li>
+              <li><span>6</span><div><strong>Clear the bookmarklet blocklist</strong><p>Open Safari Settings → Apps → Safari → Advanced → Website Data, find YouTube, and remove its website data. This also signs the website out and clears other YouTube site preferences.</p></div></li>
+            </ol>
+            <p class="activation-check"><strong>Platform limit:</strong> A bookmarklet cannot launch itself on a new or reloaded Safari page. Automatic fresh-page activation requires a packaged iOS Safari Web Extension app.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -177,32 +298,33 @@
     video.addEventListener("loadedmetadata", () => shell.classList.add("has-video"));
     video.addEventListener("error", () => shell.classList.remove("has-video"));
 
-    const platformTabs = [...document.querySelectorAll(".platform-tab[role='tab']")];
-    function selectPlatform(tab, moveFocus = false) {
-      platformTabs.forEach((item) => {
-        const selected = item === tab;
-        item.setAttribute("aria-selected", String(selected));
-        item.tabIndex = selected ? 0 : -1;
-        document.getElementById(item.getAttribute("aria-controls")).hidden = !selected;
-      });
-      const tabList = tab.parentElement;
-      tabList.scrollTo({
-        left: tab.offsetLeft - (tabList.clientWidth - tab.offsetWidth) / 2,
-        behavior: "smooth"
-      });
-      if (moveFocus) tab.focus();
-    }
-    platformTabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => selectPlatform(tab));
-      tab.addEventListener("keydown", (event) => {
-        let nextIndex = null;
-        if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % platformTabs.length;
-        if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + platformTabs.length) % platformTabs.length;
-        if (event.key === "Home") nextIndex = 0;
-        if (event.key === "End") nextIndex = platformTabs.length - 1;
-        if (nextIndex === null) return;
-        event.preventDefault();
-        selectPlatform(platformTabs[nextIndex], true);
+    document.querySelectorAll("[role='tablist']").forEach((tabList) => {
+      const tabs = [...tabList.querySelectorAll(":scope > [role='tab']")];
+      function selectTab(tab, moveFocus = false) {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute("aria-selected", String(selected));
+          item.tabIndex = selected ? 0 : -1;
+          document.getElementById(item.getAttribute("aria-controls")).hidden = !selected;
+        });
+        tabList.scrollTo({
+          left: tab.offsetLeft - (tabList.clientWidth - tab.offsetWidth) / 2,
+          behavior: "smooth"
+        });
+        if (moveFocus) tab.focus();
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectTab(tab));
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = null;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "Home") nextIndex = 0;
+          if (event.key === "End") nextIndex = tabs.length - 1;
+          if (nextIndex === null) return;
+          event.preventDefault();
+          selectTab(tabs[nextIndex], true);
+        });
       });
     });
 
