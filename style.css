@@ -88,8 +88,16 @@ h1 em { color: var(--red-bright); font-style: normal; }
 .subtab[aria-selected="true"] { background: rgba(216,255,96,.12); color: var(--lime); }
 .subtab:focus-visible { outline: 2px solid var(--lime); outline-offset: -2px; }
 .subpanel[hidden] { display: none; }
+.step-tabs { display: flex; gap: 6px; margin: 0 0 12px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
+.step-tab { background: #171a22; border: 1px solid var(--line); border-radius: 9px; color: #858a99; cursor: pointer; flex: 1 0 auto; font: inherit; font-size: 11px; font-weight: 800; min-height: 36px; padding: 0 13px; transition: background .18s, border-color .18s, color .18s; white-space: nowrap; }
+.step-tab:hover { border-color: #454958; color: #fff; }
+.step-tab[aria-selected="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+.step-tab:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .steps { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; }
 .steps li { align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 15px; display: flex; gap: 16px; padding: 18px; }
+.steps li[hidden] { display: none; }
+.steps.is-stepper li { min-height: 150px; padding: 28px; }
+.steps.is-stepper li > div { align-self: center; }
 .steps li > span { align-items: center; background: #20232c; border-radius: 8px; color: #b4b8c4; display: flex; flex: 0 0 auto; font-size: 12px; font-weight: 800; height: 30px; justify-content: center; width: 30px; }
 .steps strong { font-size: 14px; }
 .steps p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 5px 0 0; }
@@ -131,6 +139,8 @@ footer .wrap { display: flex; justify-content: space-between; }
   .platform { border-radius: 16px; padding: 22px; }
   .subtabs { margin-inline: -4px; }
   .subtab { padding-inline: 12px; }
+  .step-tabs { margin-inline: -2px; }
+  .steps.is-stepper li { min-height: 180px; padding: 22px; }
   .usage { padding-bottom: 80px; padding-top: 72px; }
   footer .wrap { flex-direction: column; gap: 8px; }
 }

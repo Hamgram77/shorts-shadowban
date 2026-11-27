@@ -6,7 +6,7 @@
   <meta name="description" content="Shorts Shadowban permanently skips YouTube Shorts from channels you never want to see again.">
   <meta name="theme-color" content="#090a0e">
   <title>Shorts Shadowban — Take back your Shorts feed</title>
-  <link rel="stylesheet" href="./style.css?v=20261127-subtabs">
+  <link rel="stylesheet" href="./style.css?v=20261127-stepper">
   <meta name="google-site-verification" content="qNuObu2RHrX6sKwxbCZ5j013WckDOmJqqZO2w8SiCCM" />
 </head>
 <body>
@@ -297,6 +297,37 @@
     const shell = document.getElementById("video-shell");
     video.addEventListener("loadedmetadata", () => shell.classList.add("has-video"));
     video.addEventListener("error", () => shell.classList.remove("has-video"));
+
+    let generatedStepId = 0;
+    document.querySelectorAll(".subpanel .steps").forEach((stepList) => {
+      const items = [...stepList.children];
+      if (items.length < 2) return;
+      const stepTabs = document.createElement("div");
+      stepTabs.className = "step-tabs";
+      stepTabs.setAttribute("role", "tablist");
+      stepTabs.setAttribute("aria-label", "Instruction steps");
+      items.forEach((item, index) => {
+        generatedStepId += 1;
+        const panelId = `instruction-step-${generatedStepId}`;
+        const tabId = `${panelId}-tab`;
+        item.id = panelId;
+        item.setAttribute("role", "tabpanel");
+        item.setAttribute("aria-labelledby", tabId);
+        item.hidden = index !== 0;
+        const stepTab = document.createElement("button");
+        stepTab.className = "step-tab";
+        stepTab.id = tabId;
+        stepTab.type = "button";
+        stepTab.setAttribute("role", "tab");
+        stepTab.setAttribute("aria-controls", panelId);
+        stepTab.setAttribute("aria-selected", String(index === 0));
+        stepTab.tabIndex = index === 0 ? 0 : -1;
+        stepTab.textContent = `Step ${index + 1}`;
+        stepTabs.appendChild(stepTab);
+      });
+      stepList.classList.add("is-stepper");
+      stepList.before(stepTabs);
+    });
 
     document.querySelectorAll("[role='tablist']").forEach((tabList) => {
       const tabs = [...tabList.querySelectorAll(":scope > [role='tab']")];
