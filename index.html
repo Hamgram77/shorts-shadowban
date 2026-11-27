@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shorts Shadowban permanently skips YouTube Shorts from channels you never want to see again.">
+  <meta name="theme-color" content="#090a0e">
+  <title>Shorts Shadowban — Take back your Shorts feed</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Shorts Shadowban home"><span>🚫</span> Shorts Shadowban</a>
+    <a class="github-link" href="https://github.com/Hamgram77/shorts-shadowban">View on GitHub ↗</a>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="eyebrow"><span></span> Open source · Zero tracking · Yours forever</div>
+      <h1>Shorts, without<br><em>the sludge.</em></h1>
+      <p class="lede">One click to permanently erase AI-voiceover and spam channels from YouTube Shorts.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="./shorts-shadowban.zip" download>Download Extension (.zip)</a>
+        <a class="button button-quiet" href="#bookmarklet">No-download option ↓</a>
+      </div>
+      <p class="privacy-note">No account. No cloud. Your blocklist stays on your device.</p>
+    </section>
+
+    <section class="demo wrap" aria-labelledby="demo-title">
+      <div class="section-heading">
+        <p>See it in action</p>
+        <h2 id="demo-title">One tap. Gone for good.</h2>
+      </div>
+      <div class="video-shell" id="video-shell">
+        <video id="demo-video" controls preload="metadata" playsinline>
+          <source src="./demo.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+        <div class="video-placeholder" id="video-placeholder">
+          <span class="play-icon">▶</span>
+          <strong>Demo video coming soon</strong>
+          <small>Add <code>demo.mp4</code> to the repository root and it will appear here automatically.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="bookmarklet-section" id="bookmarklet" aria-labelledby="bookmarklet-title">
+      <div class="wrap bookmarklet-grid">
+        <div>
+          <p class="section-kicker">Zero-download mode</p>
+          <h2 id="bookmarklet-title">On iPad? Skip the install.</h2>
+          <p>Drag this button to your bookmarks bar on desktop. On iPhone or iPad, copy its code and paste it into the address field of any bookmark.</p>
+          <p class="fine-print">Open a YouTube Short, tap the bookmark, then use the new 🚫 button. Run the bookmark once after each page reload.</p>
+        </div>
+        <div class="bookmarklet-card">
+          <span class="drag-label">Drag me to your bookmarks bar</span>
+          <a id="bookmarklet-link" class="bookmarklet" href="javascript:(()=>{const K='shortsShadowbanHandles',C='ssb-bookmarklet-button';if(window.__ssbBookmarklet){alert('Shorts Shadowban is already active.');return}window.__ssbBookmarklet=1;const h=r=>{const a=r&&r.querySelector(&quot;a[href^='/@']&quot;);return(a&&(a.getAttribute('href').match(/@[A-Za-z0-9._-]+/)||[])[0]||'').toLowerCase()},active=()=>[...document.querySelectorAll('ytd-reel-video-renderer')].sort((a,b)=>{const y=e=>{const r=e.getBoundingClientRect();return Math.abs(r.top+r.height/2-innerHeight/2)};return y(a)-y(b)})[0],next=()=>{const b=document.querySelector(&quot;button[aria-label='Next video'],button[aria-label='Next Short'],#navigation-button-down button&quot;);b?b.click():document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',code:'ArrowDown',bubbles:true}))},list=()=>{try{return JSON.parse(localStorage.getItem(K)||'[]')}catch(e){return[]}},scan=()=>{if(!location.pathname.startsWith('/shorts/'))return;const r=active();if(!r)return;const x=h(r),a=list();if(x&&a.includes(x)){next();return}const bar=r.querySelector('#actions,#actions-container');if(!bar||bar.querySelector('.'+C))return;const b=document.createElement('button');b.className=C;b.textContent='🚫';b.title='Shadowban Channel';b.setAttribute('aria-label','Shadowban Channel');b.style.cssText='width:48px;height:48px;border:1px solid rgba(255,255,255,.27);border-radius:50%;background:rgba(17,17,17,.87);color:white;font-size:24px;cursor:pointer;margin:12px auto;display:block';b.onclick=e=>{e.stopPropagation();const n=h(r);if(!n)return alert('Channel handle not found.');localStorage.setItem(K,JSON.stringify([...new Set([...list(),n])]));next()};bar.appendChild(b)};new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});addEventListener('scroll',scan,true);setInterval(scan,1200);scan();alert('Shorts Shadowban is active for this tab.');})()">🚫 Shadowban Shorts</a>
+          <button id="copy-bookmarklet" class="button button-copy" type="button">Copy Bookmarklet Code</button>
+          <span id="copy-status" class="copy-status" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="setup wrap" id="setup" aria-labelledby="setup-title">
+      <div class="section-heading">
+        <p>Setup &amp; use</p>
+        <h2 id="setup-title">Pick your platform.</h2>
+      </div>
+
+      <div class="platform" id="chromium">
+        <div class="platform-title"><span>01</span><div><p>Chrome · Brave · Edge</p><h3>Install the extension</h3></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Download and unzip</strong><p>Click “Download Extension (.zip)” above, then extract <code>shorts-shadowban.zip</code>.</p></div></li>
+          <li><span>2</span><div><strong>Open extensions</strong><p>Visit <code>chrome://extensions</code>, <code>brave://extensions</code>, or <code>edge://extensions</code>.</p></div></li>
+          <li><span>3</span><div><strong>Enable Developer mode</strong><p>Turn on the Developer mode switch in the top-right corner.</p></div></li>
+          <li><span>4</span><div><strong>Load the folder</strong><p>Choose “Load unpacked” and select the extracted <code>extension/</code> folder—the one containing <code>manifest.json</code>.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="platform" id="mac-safari">
+        <div class="platform-title"><span>02</span><div><p>Mac Safari</p><h3>Convert with Xcode</h3></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Download and unzip</strong><p>Extract the ZIP and locate the included <code>extension/</code> folder.</p></div></li>
+          <li><span>2</span><div><strong>Convert the web extension</strong><p>In Terminal run <code>xcrun safari-web-extension-converter /path/to/extension</code>. Xcode creates a Safari app project.</p></div></li>
+          <li><span>3</span><div><strong>Build and enable</strong><p>Run the project in Xcode, then open Safari → Settings → Extensions and enable Shorts Shadowban.</p></div></li>
+          <li><span>4</span><div><strong>Allow YouTube access</strong><p>When Safari asks, allow the extension on <code>youtube.com</code>.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="platform" id="ios-safari">
+        <div class="platform-title"><span>03</span><div><p>iPad · iPhone Safari</p><h3>Use the bookmarklet</h3></div></div>
+        <ol class="steps">
+          <li><span>1</span><div><strong>Create any bookmark</strong><p>In Safari, bookmark this page. Open Bookmarks, tap Edit, then select the new bookmark.</p></div></li>
+          <li><span>2</span><div><strong>Copy the code</strong><p>Tap “Copy Bookmarklet Code” above and replace the bookmark’s address with the copied <code>javascript:</code> code.</p></div></li>
+          <li><span>3</span><div><strong>Name and save it</strong><p>Call it “🚫 Shadowban Shorts,” save it, then visit <code>youtube.com/shorts</code> in Safari.</p></div></li>
+          <li><span>4</span><div><strong>Activate each session</strong><p>Open the bookmark from the bookmarks menu after loading or refreshing YouTube.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="usage wrap" aria-labelledby="usage-title">
+      <div class="usage-copy"><p class="section-kicker">Everyday use</p><h2 id="usage-title">Curate once.<br>Enjoy forever.</h2></div>
+      <div class="usage-cards">
+        <article><span>🚫</span><h3>Shadowban</h3><p>Tap the circular 🚫 beside Like and Dislike. That channel is saved and the next Short appears immediately.</p></article>
+        <article><span>↓</span><h3>Auto-skip</h3><p>If a blocked creator appears again, Shorts Shadowban moves past it automatically.</p></article>
+        <article><span>↩</span><h3>Unblock</h3><p>Open the extension from your browser toolbar and choose “Unblock” beside any handle. Bookmarklet users can clear the site data for <code>youtube.com</code>.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>🚫 Shorts Shadowban</span><span>MIT licensed · No tracking · No dependencies</span></div></footer>
+
+  <script>
+    const video = document.getElementById("demo-video");
+    const shell = document.getElementById("video-shell");
+    video.addEventListener("loadedmetadata", () => shell.classList.add("has-video"));
+    video.addEventListener("error", () => shell.classList.remove("has-video"));
+
+    const bookmarklet = document.getElementById("bookmarklet-link");
+    const copyButton = document.getElementById("copy-bookmarklet");
+    const copyStatus = document.getElementById("copy-status");
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(bookmarklet.href);
+        copyStatus.textContent = "Copied! Paste it into a bookmark address.";
+        copyButton.textContent = "Copied ✓";
+      } catch {
+        const input = document.createElement("textarea");
+        input.value = bookmarklet.href;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+        copyStatus.textContent = "Copied! Paste it into a bookmark address.";
+      }
+      setTimeout(() => { copyButton.textContent = "Copy Bookmarklet Code"; }, 2500);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shorts Shadowban</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { background: #0b0c10; color: #f6f7fb; margin: 0; min-width: 320px; }
+    main { padding: 20px; width: min(100vw, 390px); }
+    header { align-items: center; display: flex; gap: 12px; margin-bottom: 18px; }
+    .logo { align-items: center; background: #ef3340; border-radius: 14px; display: flex; font-size: 22px; height: 44px; justify-content: center; width: 44px; }
+    h1 { font-size: 18px; margin: 0; }
+    header p { color: #9499a8; font-size: 12px; margin: 3px 0 0; }
+    #empty { background: #14161d; border: 1px dashed #343846; border-radius: 14px; color: #a9aebb; line-height: 1.5; padding: 22px; text-align: center; }
+    ul { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    li { align-items: center; background: #14161d; border: 1px solid #252936; border-radius: 12px; display: flex; gap: 12px; justify-content: space-between; padding: 10px 10px 10px 14px; }
+    .handle { font-size: 14px; font-weight: 650; max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    button { background: #292d39; border: 0; border-radius: 9px; color: #fff; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; min-height: 36px; padding: 0 12px; }
+    button:hover, button:focus-visible { background: #ef3340; outline: none; }
+    .count { color: #9499a8; font-size: 12px; margin: 14px 2px 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="logo" aria-hidden="true">🚫</div>
+      <div><h1>Shorts Shadowban</h1><p>Your permanent skip list</p></div>
+    </header>
+    <div id="empty" hidden>No channels shadowbanned yet.<br>Use the 🚫 button on a YouTube Short.</div>
+    <ul id="handles" aria-label="Shadowbanned channels"></ul>
+    <p id="count" class="count"></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
