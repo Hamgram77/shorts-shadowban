@@ -51,7 +51,7 @@
           <p class="section-kicker">Zero-download mode</p>
           <h2 id="bookmarklet-title">On iPad? Skip the install.</h2>
           <p>Drag this button to your bookmarks bar on desktop. On iPhone or iPad, copy its code and paste it into the address field of any Safari bookmark.</p>
-          <p class="fine-print">Open <strong>youtube.com/shorts in Safari</strong> (not the YouTube app), tap the bookmark, then use the floating 🚫 button. Run the bookmark once after each page reload.</p>
+          <p class="fine-print">Open <strong>youtube.com in Safari</strong> (not the YouTube app) and tap the bookmark once. When you enter Shorts in that tab, the 🚫 button appears automatically beside Like and Share. Activate it again only after reloading or reopening the tab.</p>
         </div>
         <div class="bookmarklet-card">
           <span class="drag-label">Drag me to your bookmarks bar</span>
@@ -94,7 +94,7 @@
           <li><span>1</span><div><strong>Create any bookmark</strong><p>In Safari, bookmark this page. Open Bookmarks, tap Edit, then select the new bookmark.</p></div></li>
           <li><span>2</span><div><strong>Copy the code</strong><p>Tap “Copy Bookmarklet Code” above and replace the bookmark’s address with the copied <code>javascript:</code> code.</p></div></li>
           <li><span>3</span><div><strong>Name and save it</strong><p>Call it “🚫 Shadowban Shorts,” save it, then visit <code>youtube.com/shorts</code> in Safari. Bookmarklets cannot run inside the YouTube app.</p></div></li>
-          <li><span>4</span><div><strong>Activate each session</strong><p>Open the bookmark from the bookmarks menu after loading or refreshing YouTube.</p></div></li>
+          <li><span>4</span><div><strong>Activate, then enter Shorts</strong><p>While on any YouTube page in Safari, open the bookmark once. Now enter Shorts—the 🚫 button appears automatically beside the action controls.</p></div></li>
         </ol>
       </div>
     </section>
@@ -135,28 +135,32 @@
     const bookmarklet = document.getElementById("bookmarklet-link");
     const copyButton = document.getElementById("copy-bookmarklet");
     const copyStatus = document.getElementById("copy-status");
-    const bookmarkletCode = String.raw`javascript:(()=>{
-      const VERSION="3",KEY="shortsShadowbanHandles",BUTTON_ID="shorts-shadowban-mobile-button";
+    const bookmarkletCode = String.raw`(()=>{
+      const VERSION="4",KEY="shortsShadowbanHandles",BUTTON_ID="shorts-shadowban-mobile-button";
       if(window.__shortsShadowbanBookmarkletVersion===VERSION){alert("Shorts Shadowban is already active.");return;}
       window.__shortsShadowbanBookmarkletVersion=VERSION;
       document.getElementById(BUTTON_ID)?.remove();
       const visible=(element)=>{if(!element)return false;const rect=element.getBoundingClientRect();return rect.width>0&&rect.height>0&&rect.bottom>0&&rect.top<innerHeight;};
       const active=()=>{const roots=[...document.querySelectorAll(".reel-video-in-sequence-new,ytd-reel-video-renderer-cow,ytd-reel-video-renderer")].filter(visible);return roots.sort((a,b)=>{const center=(element)=>{const rect=element.getBoundingClientRect();return Math.abs(rect.top+rect.height/2-innerHeight/2);};return center(a)-center(b);})[0]||document;};
-      const handle=(root)=>{const links=[...(root||document).querySelectorAll("a[href^='/@']")].filter(visible);const link=links[0]||[...document.querySelectorAll("a[href^='/@']")].find(visible);const match=String(link?.getAttribute("href")||link?.textContent||"").match(/@[A-Za-z0-9._-]+/);return match?match[0].toLowerCase():"";};
+      const handle=(root)=>{const links=[...(root||document).querySelectorAll("a[href*='/@']")].filter(visible);const link=links[0]||[...document.querySelectorAll("a[href*='/@']")].find(visible);const match=String(link?.getAttribute("href")||link?.textContent||"").match(/@[A-Za-z0-9._-]+/);return match?match[0].toLowerCase():"";};
       const read=()=>{try{const value=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(value)?value:[];}catch{return[];}};
-      const write=(handles)=>localStorage.setItem(KEY,JSON.stringify([...new Set(handles)]));
+      const write=(handles)=>{try{localStorage.setItem(KEY,JSON.stringify([...new Set(handles)]));return true;}catch{alert("Safari blocked local storage. Turn off Private Browsing for this site and try again.");return false;}};
       const next=()=>{const nextButton=document.querySelector("button[aria-label='Next video'],button[aria-label='Next Short'],#navigation-button-down button");if(nextButton){nextButton.click();return;}const root=active();const sequence=root.closest?.(".reel-video-in-sequence-new")||root;const nextItem=sequence.nextElementSibling;if(nextItem){nextItem.scrollIntoView({behavior:"smooth",block:"center"});return;}const scroller=document.querySelector("#shorts-inner-container,#shorts-container,ytd-shorts");if(scroller?.scrollBy){scroller.scrollBy({top:Math.max(innerHeight,scroller.clientHeight*.9),behavior:"smooth"});}else{scrollBy({top:innerHeight,behavior:"smooth"});}document.dispatchEvent(new KeyboardEvent("keydown",{key:"ArrowDown",code:"ArrowDown",bubbles:true}));};
+      const actionBar=(root)=>{const known=root.querySelector("ytd-reel-player-overlay-renderer-cow reel-action-bar-view-model,yt-reel-player-overlay-view-model reel-action-bar-view-model,reel-action-bar-view-model,.ytReelPlayerOverlayViewModelActionsContainer,#actions,#actions-container");if(known)return known;const control=[...root.querySelectorAll("button")].find((item)=>/like|share/i.test(item.getAttribute("aria-label")||""));if(!control)return null;let parent=control.parentElement;for(let depth=0;parent&&parent!==root&&depth<7;depth++,parent=parent.parentElement){if(parent.querySelectorAll("button,yt-button-shape").length>=2)return parent;}return null;};
+      const actionStyle="width:48px;height:48px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(15,15,15,.85);box-shadow:0 4px 16px rgba(0,0,0,.3);color:white;font:24px/1 system-ui;display:flex;align-items:center;justify-content:center;padding:0;margin:12px auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
+      const fallbackStyle="position:fixed;right:16px;right:max(16px,env(safe-area-inset-right));bottom:96px;bottom:max(96px,calc(72px + env(safe-area-inset-bottom)));z-index:2147483647;width:56px;height:56px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(15,15,15,.92);box-shadow:0 6px 24px rgba(0,0,0,.45);color:white;font:26px/1 system-ui;display:flex;align-items:center;justify-content:center;padding:0;margin:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
       const button=document.createElement("button");
-      button.id=BUTTON_ID;button.type="button";button.textContent="🚫";button.title="Shadowban Channel";button.setAttribute("aria-label","Shadowban Channel");button.style.cssText="position:fixed;right:16px;right:max(16px,env(safe-area-inset-right));bottom:96px;bottom:max(96px,calc(72px + env(safe-area-inset-bottom)));z-index:2147483647;width:56px;height:56px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(15,15,15,.92);box-shadow:0 6px 24px rgba(0,0,0,.45);color:white;font:26px/1 system-ui;display:flex;align-items:center;justify-content:center;padding:0;touch-action:manipulation;-webkit-tap-highlight-color:transparent;";
-      button.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();const creator=handle(active());if(!creator){alert("Channel handle not found. Wait for the Short to load and try again.");return;}write([...read(),creator]);button.textContent="✓";setTimeout(()=>{button.textContent="🚫";},700);next();},{capture:true});
+      button.id=BUTTON_ID;button.type="button";button.textContent="🚫";button.title="Shadowban Channel";button.setAttribute("aria-label","Shadowban Channel");
+      button.addEventListener("click",(event)=>{event.preventDefault();event.stopPropagation();const creator=handle(active());if(!creator){alert("Channel handle not found. Wait for the Short to load and try again.");return;}if(!write([...read(),creator]))return;button.textContent="✓";setTimeout(()=>{button.textContent="🚫";},700);next();},{capture:true});
       document.body.appendChild(button);
       let lastSkipped="",lastSkippedAt=0;
-      const scan=()=>{const onShorts=location.pathname.startsWith("/shorts/");button.hidden=!onShorts;if(!onShorts)return;const creator=handle(active()),now=Date.now();if(creator&&read().includes(creator)&&(creator!==lastSkipped||now-lastSkippedAt>1600)){lastSkipped=creator;lastSkippedAt=now;next();}};
+      const scan=()=>{const onShorts=location.pathname.startsWith("/shorts/");button.hidden=!onShorts;if(!onShorts)return;const root=active(),bar=actionBar(root);if(bar){button.style.cssText=actionStyle;if(button.parentElement!==bar)bar.appendChild(button);}else{button.style.cssText=fallbackStyle;if(button.parentElement!==document.body)document.body.appendChild(button);}const creator=handle(root),now=Date.now();if(creator&&read().includes(creator)&&(creator!==lastSkipped||now-lastSkippedAt>1600)){lastSkipped=creator;lastSkippedAt=now;next();}};
       new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
-      addEventListener("scroll",scan,{passive:true,capture:true});addEventListener("touchend",scan,{passive:true});addEventListener("popstate",scan);addEventListener("yt-navigate-finish",scan);setInterval(scan,900);scan();alert("Shorts Shadowban is active. Tap the floating 🚫 button on a Short.");
+      addEventListener("scroll",scan,{passive:true,capture:true});addEventListener("touchend",scan,{passive:true});addEventListener("popstate",scan);addEventListener("yt-navigate-finish",scan);setInterval(scan,900);scan();alert("Shorts Shadowban is active. The 🚫 button will appear with the Like and Share controls.");
     })()`;
-    bookmarklet.setAttribute("href", bookmarkletCode.replace(/\n\s*/g, ""));
-    const bookmarkletAddress = () => bookmarklet.getAttribute("href");
+    const bookmarkletSource = bookmarkletCode.replace(/\n\s*/g, "");
+    const bookmarkletAddress = () => `javascript:${encodeURIComponent(bookmarkletSource)}`;
+    bookmarklet.setAttribute("href", bookmarkletAddress());
     copyButton.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(bookmarkletAddress());
